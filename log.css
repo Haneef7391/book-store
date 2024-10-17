@@ -1,0 +1,72 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+body{
+    background-image: url(conn.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+section {
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    display: flex;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.login h1{
+  padding-bottom: 50px;
+  color: white;
+}
+.login {
+    background: rgba(44, 43, 43, 0.337); /* Semi-transparent white background */
+    backdrop-filter: blur(5px); /* Blur the content behind the form */
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Optional: border for a frosty look */
+    padding: 30px;
+    max-width: 400px;
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+
+button {
+    padding: 10px 15px;
+    background-color: #1d1e1f;
+    color: white;
+    border: solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 50%;
+}
+
+button:hover {
+    background-color: #282829;
+}
+
+a {
+    display: block;
+    margin-top: 15px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

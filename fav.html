@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/23330d1986.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="fav.css">
+    <title>Tiny Table</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html"><img src="logo.png" alt="Logo"></a>
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="far fa-user"></i> Account
+                    </a>
+                    <div class="dropdown-profile">
+                        <a href="#">Suggest book <i class="fa-solid fa-pen-to-square"></i></a>
+                    </div>
+                </li>
+                <li>
+                    <a href="all.html"> All Books <i class="fas fa-book-open"></i></a>
+                </li>
+                <li>
+                    <button class="theme-toggle" onclick="toggleTheme()">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="favorites-list"></div>
+
+    <script>
+        // Function to toggle theme
+        function toggleTheme() {
+            document.body.classList.toggle("dark-theme");
+            const themeToggle = document.querySelector('.theme-toggle i');
+
+            if (document.body.classList.contains("dark-theme")) {
+                themeToggle.classList.remove('fa-sun');
+                themeToggle.classList.add('fa-moon');
+                localStorage.setItem('theme', 'dark');
+                console.log('Theme saved: dark');
+            } else {
+                themeToggle.classList.remove('fa-moon');
+                themeToggle.classList.add('fa-sun');
+                localStorage.setItem('theme', 'light');
+                console.log('Theme saved: light');
+            }
+        }
+
+        // Load theme from localStorage on page load
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('theme');
+            console.log('Loaded theme:', savedTheme);
+            if (savedTheme) {
+                document.body.classList.toggle("dark-theme", savedTheme === 'dark');
+                const themeToggle = document.querySelector('.theme-toggle i');
+                if (savedTheme === 'dark') {
+                    themeToggle.classList.remove('fa-sun');
+                    themeToggle.classList.add('fa-moon');
+                }
+            }
+            renderFavorites(); // Initialize rendering of favorites on page load
+        };
+
+        // Dropdown toggle functionality
+        document.querySelectorAll('.dropdown-toggle').forEach(item => {
+            item.addEventListener('click', event => {
+                const dropdownContent = item.nextElementSibling;
+                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+
+        // Close dropdown if clicking outside
+        window.onclick = event => {
+            if (!event.target.matches('.dropdown-toggle')) {
+                document.querySelectorAll('.dropdown-profile').forEach(content => {
+                    content.style.display = 'none';
+                });
+            }
+        };
+
+        // Function to render favorites from localStorage
+        function renderFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const favoritesList = document.getElementById('favorites-list');
+            favoritesList.innerHTML = ''; // Clear previous content
+
+            if (favorites.length === 0) {
+                favoritesList.innerHTML = '<div class="no"><p>No favorites added yet.😕</p></div>';
+            } else {
+                favorites.forEach(fav => {
+                    const favoriteItem = document.createElement('div');
+                    favoriteItem.className = 'pdf-item';
+                    favoriteItem.innerHTML = `
+                        <a href="${fav.link}" target="_blank">
+                            <img src="${fav.image}" alt="${fav.title}">
+                            <h3>${fav.title}</h3>
+                            <p>${fav.author}</p>
+                        </a>
+                    `;
+                    favoritesList.appendChild(favoriteItem);
+                });
+            }
+        }
+    </script>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Tiny Table. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

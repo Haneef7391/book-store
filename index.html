@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/23330d1986.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Tiny Table</title>
+</head>
+<body>
+    <div class="loading-container">
+        <img src="lod.gif" alt="Loading..." class="loading-gif">
+    </div>
+    <script src="loading.js"></script>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+        </div>
+        <div class="ser" id="search-box">
+            <input type="text" name="search-box" id="search-input" placeholder="Search" readonly onclick="this.removeAttribute('readonly');">
+            <i class="fas fa-search"></i>
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="all.html"><i class="fas fa-book-open"></i> All Books</a>
+                </li>
+                <li>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="fas fa-book"></i> Books <i class="fa-duotone fa-solid fa-caret-down"></i>
+                    </a>
+                    <div class="dropdown-content" id="books-menu">
+                        <a href="#" onclick="filterPdfs('Python')">Python</a>
+                        <a href="#" onclick="filterPdfs('C')">C</a>
+                        <a href="#" onclick="filterPdfs('C++')">C++</a>
+                        <a href="#" onclick="filterPdfs('Java')">Java</a>
+                        <a href="#" onclick="filterPdfs('JavaScript')">JavaScript</a>
+                        <a href="#" onclick="filterPdfs('Node.js')">Node.js</a>
+                        <a href="#" onclick="filterPdfs('Django')">Django</a>
+                        <a href="#" onclick="filterPdfs('R')">R</a>
+                        <a href="#" onclick="filterPdfs('MySQL')">MySQL</a>
+                        <a href="#" onclick="filterPdfs('Assembly')">Assembly</a>
+                        <a href="#" onclick="filterPdfs('Swift')">Swift</a>
+                        <a href="#" onclick="filterPdfs('DSA')">DSA</a>
+                        <a href="#" onclick="filterPdfs('Programming')">Programming</a>
+                        <a href="#" onclick="filterPdfs('Tailwind CSS')">Tailwind CSS</a>
+                        <a href="#" onclick="filterPdfs('MongoDB')">MongoDB</a>
+                        <a href="#" onclick="filterPdfs('PHP')">PHP</a>
+                        <a href="#" onclick="filterPdfs('Mindset')">Mindset</a>
+                        <a href="#" onclick="filterPdfs('Others')">Others</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="fav.html"><i class="far fa-heart"></i> Favorites</a>
+                </li>
+                <li>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="far fa-user"></i> Account
+                    </a>
+                    <div class="dropdown-profile">
+                        <a href="#">Suggest book <i class="fa-solid fa-pen-to-square"></i></a>
+                    </div>
+                </li>
+                <li>
+
+                </li>
+                   <li>
+                    <button class="theme-toggle" onclick="toggleTheme()">
+                            <i class="fas fa-sun"></i>
+                     </button>   
+                        <button class="moon"><i class="fa-thin fa-moon-stars"onclick="toggleTheme()"></i></button> 
+                    </li>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="home-text">
+        <h1>Welcome to <span>Tiny Table!</span></h1>
+        <pre>Discover a world of knowledge and adventure with our extensive collection of books. 
+ From timeless classics to the latest bestsellers, we have something for every reader.</pre>
+    </section>
+    
+    <div class="Join">
+        <a href="conn.html">
+            <button class="join-button">Join Us <i class="fa-regular fa-share-from-square"></i></button>
+        </a>
+        <div class="pp"><h3>Popular</h3></div>
+        <div class="home-books" id="pdf-list"></div>
+        
+        <script>
+               const pdfs = [
+                { id: 1, title: 'Think Python', author: 'Allen Downey', image: 'books/think python.jpg', link: 'books/22. Think Python author Allen Downey.pdf' },
+                { id: 2, title: 'R for Beginners', author: 'Emmanuel Paradis', image: 'books/R for beginers.jpg', link: 'books/24. R for Beginners author Emmanuel Paradis.pdf' },
+                { id: 3, title: 'JavaScript for Beginners', author: 'Daniel Winterstein', image: 'books/Javascript for beginers.jpg', link: 'books/11. JavaScript for beginners author Daniel Winterstein.pdf' },
+                { id: 4, title: 'Fundamentals of Computer Programming with C#', author: 'Svetlin Nakov', image: 'books/Fundamentals programing with C.jpg', link: 'books/03. Fundamentals of Computer Programming with C# author Svetlin Nakov & Co..pdf' },
+                { id: 5, title: 'The A-Z of Programming Languages', author: 'Computerworld', image: 'books/A-z.jpg', link: 'books/01. The A-Z of Programming Languages author Computerworld.pdf' },
+                { id: 6, title: 'Mindset', author: 'Carol S. Dweck', image: 'books/mindset.jpg', link: 'books/01-11-2020-205951Mindset by Carol S. Dweck.pdf' },
+                { id: 7, title: 'Data Structures', author: '', image: 'books/Data structures.jpg', link: 'books/DataStructures.pdf' },
+                { id: 8, title: 'x86-64 Assembly Language Programming with Ubuntu', author: '', image: 'books/Assembly.jpg', link: 'books/x86-64 Assembly Language Programming with Ubuntu.pdf' },
+                { id: 9, title: 'The Undergraduate Guide to R', author: 'Trevor Martin', image: 'books/advance R.jpg', link: 'books/The Undergraduate Guide to R, Trevor Martin.pdf' },
+                { id: 10, title: 'Swift Notes for Professionals', author: 'GoalKicker', image: 'books/swift.jpg', link: 'books/Swift Notes for Professionals, GoalKicker.pdf' }
+            ];
+
+
+            function renderPdfs(filteredPdfs) {
+                const pdfList = document.getElementById('pdf-list');
+                pdfList.innerHTML = ''; 
+
+                filteredPdfs.forEach(pdf => {
+                    const pdfElement = document.createElement('div');
+                    pdfElement.className = 'pdf-item';
+                    pdfElement.innerHTML = `
+                        <a href="${pdf.link}" target="_blank">
+                            <img src="${pdf.image}" alt="${pdf.title}">
+                            <h3>${pdf.title}</h3>
+                            <p>${pdf.author}</p>
+                        </a>
+                    `;
+                    pdfList.appendChild(pdfElement);
+                });
+            }
+
+            function filterPdfs(category) {
+                const filteredPdfs = pdfs.filter(pdf => 
+                    pdf.title.toLowerCase().includes(category.toLowerCase())
+                );
+                renderPdfs(filteredPdfs);
+            }
+
+            function filterBySearch() {
+                const searchTerm = document.getElementById('search-input').value.toLowerCase();
+                const filteredPdfs = pdfs.filter(pdf => 
+                    pdf.title.toLowerCase().includes(searchTerm) || 
+                    pdf.author.toLowerCase().includes(searchTerm)
+                );
+                renderPdfs(filteredPdfs);
+            }
+
+            window.onload = () => {
+                // Load saved theme from localStorage
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') {
+                    document.body.classList.add('dark-theme');
+                    const themeToggle = document.querySelector('.theme-toggle i');
+                    themeToggle.classList.remove('fa-sun');
+                    themeToggle.classList.add('fa-moon');
+                }
+                
+                renderPdfs(pdfs);
+                document.getElementById('search-input').addEventListener('keyup', filterBySearch);
+            };
+
+            document.querySelectorAll('.dropdown-toggle').forEach(item => {
+                item.addEventListener('click', event => {
+                    const dropdownContent = item.nextElementSibling;
+                    dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+
+            window.onclick = event => {
+                if (!event.target.matches('.dropdown-toggle')) {
+                    document.querySelectorAll('.dropdown-content').forEach(content => {
+                        content.style.display = 'none';
+                    });
+                }
+            };
+
+            function toggleTheme() {
+                document.body.classList.toggle("dark-theme");
+                const themeToggle = document.querySelector('.theme-toggle i');
+                if (document.body.classList.contains("dark-theme")) {
+                    themeToggle.classList.remove('fa-sun');
+                    themeToggle.classList.add('fa-moon');
+                    // Save theme to localStorage
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    themeToggle.classList.remove('fa-moon');
+                    themeToggle.classList.add('fa-sun');
+                    // Save theme to localStorage
+                    localStorage.setItem('theme', 'light');
+                }
+            }
+        </script>
+    </div>
+</body>
+</html>

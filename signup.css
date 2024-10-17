@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+body{
+    background-image: url(conn.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+section {
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    display: flex;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.signup h1{
+  padding-bottom: 20px;
+  color: white;
+}
+.signup {
+    background: rgba(135, 132, 132, 0.115); /* Semi-transparent white background */
+    backdrop-filter: blur(5px); /* Blur the content behind the form */
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Optional: border for a frosty look */
+    padding: 30px;
+    max-width: 400px;
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+}
+
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+
+button {
+    padding: 10px 15px;
+    background-color: #201f1f;
+    color: white;
+    border: solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 50%;
+}
+
+button:hover {
+    background-color: #3b3b3b;
+}
+
+a {
+    display: block;
+    margin-top: 15px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+/* For Chrome, Safari, and newer versions of Edge */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Remove the default appearance */
+    margin: 0; /* Remove margin */
+}

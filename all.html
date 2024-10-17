@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/23330d1986.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="all.css">
+    <title>Tiny Table</title>
+</head>
+<body>
+    <div class="loading-container">
+        <img src="lod.gif" alt="Loading..." class="loading-gif">
+    </div>
+    <script src="loading.js"></script>
+    <header>
+        <div class="logo">
+            <a href="index.html"><img src="logo.png" alt="Logo"></a>
+        </div>
+        <div class="ser" id="search-box">
+            <input type="text" name="search-box" id="search-input" placeholder="Search" readonly onclick="this.removeAttribute('readonly');">
+            <i class="fas fa-search"></i>
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="fas fa-book"></i> Books <i class="fa-duotone fa-solid fa-caret-down"></i>
+                    </a>
+                    <div class="dropdown-content" id="books-menu">
+                        <a href="#" onclick="filterPdfs('Python')">Python</a>
+                        <a href="#" onclick="filterPdfs('C')">C</a>
+                        <a href="#" onclick="filterPdfs('C++')">C++</a>
+                        <a href="#" onclick="filterPdfs('Java')">Java</a>
+                        <a href="#" onclick="filterPdfs('JavaScript')">JavaScript</a>
+                        <a href="#" onclick="filterPdfs('Node.js')">Node.js</a>
+                        <a href="#" onclick="filterPdfs('Django')">Django</a>
+                        <a href="#" onclick="filterPdfs('R')">R</a>
+                        <a href="#" onclick="filterPdfs('MySQL')">MySQL</a>
+                        <a href="#" onclick="filterPdfs('Assembly')">Assembly</a>
+                        <a href="#" onclick="filterPdfs('Swift')">Swift</a>
+                        <a href="#" onclick="filterPdfs('DSA')">DSA</a>
+                        <a href="#" onclick="filterPdfs('Programming')">Programming</a>
+                        <a href="#" onclick="filterPdfs('Tailwind CSS')">Tailwind CSS</a>
+                        <a href="#" onclick="filterPdfs('MongoDB')">MongoDB</a>
+                        <a href="#" onclick="filterPdfs('PHP')">PHP</a>
+                        <a href="#" onclick="filterPdfs('Mindset')">Mindset</a>
+                        <a href="#" onclick="filterPdfs('Others')">Others</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="fav.html" class="fav"><i class="far fa-heart"></i> Favorites</a>
+                </li>
+                <li>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="far fa-user"></i> Account
+                    </a>
+                    <div class="dropdown-profile">
+                        <a href="#">Suggest book <i class="fa-solid fa-pen-to-square"></i></a>
+                    </div>
+                </li>
+                <li>
+                    <button class="theme-toggle" onclick="toggleTheme()">
+                        <i class="fas fa-sun"></i>
+                    </button>   
+                    <button class="moon" onclick="toggleTheme()">
+                        <i class="fa-thin fa-moon-stars"></i>
+                    </button> 
+                </li>
+            </ul>
+        </nav>
+    </header>
+   
+    <div id="search-results"></div>
+
+    <div class="pdf-category" id="featured-pdfs">
+        <h2>Featured Books</h2>
+        <div class="home-books" id="featured-list"></div>
+    </div>
+
+    <div class="pdf-category" id="new-arrivals-pdfs">
+        <h2>New Arrivals</h2>
+        <div class="home-books" id="new-arrivals-list"></div>
+    </div>
+
+    <div class="pdf-category" id="top-sellers-pdfs">
+        <h2>Top Sellers</h2>
+        <div class="home-books" id="top-sellers-list"></div>
+    </div>
+
+    <script>
+        const featuredPdfs = [
+            { id: 1, title: 'Think Python', author: 'Allen Downey', image: 'books/think python.jpg', link: 'books/22. Think Python author Allen Downey.pdf', category: 'Python' },
+            { id: 2, title: 'R for Beginners', author: 'Emmanuel Paradis', image: 'books/R for beginers.jpg', link: 'books/24. R for Beginners author Emmanuel Paradis.pdf', category: 'R' },
+            { id: 3, title: 'JavaScript for Beginners', author: 'Daniel Winterstein', image: 'books/Javascript for beginers.jpg', link: 'books/11. JavaScript for beginners author Daniel Winterstein.pdf', category: 'JavaScript' }
+        ];
+    
+        const newArrivalsPdfs = [
+            { id: 4, title: 'Fundamentals of Computer Programming with C#', author: 'Svetlin Nakov & Co.', image: 'books/Fundamentals programing with C.jpg', link: 'books/03. Fundamentals of Computer Programming with C# author Svetlin Nakov & Co..pdf', category: 'C#' },
+            { id: 5, title: 'The A-Z of Programming Languages', author: 'Computerworld', image: 'books/A-z.jpg', link: 'books/01. The A-Z of Programming Languages author Computerworld.pdf', category: 'Programming' },
+            { id: 6, title: 'Mindset', author: 'Carol S. Dweck', image: 'books/mindset.jpg', link: 'books/01-11-2020-205951Mindset by Carol S. Dweck.pdf', category: 'Mindset' }
+        ];
+    
+        const topSellersPdfs = [
+            { id: 7, title: 'Data Structures', author: '', image: 'books/Data structures.jpg', link: 'books/DataStructures.pdf', category: 'DSA' },
+            { id: 8, title: 'x86-64 Assembly Language Programming with Ubuntu', author: '', image: 'books/Assembly.jpg', link: 'books/x86-64 Assembly Language Programming with Ubuntu.pdf', category: 'Assembly' },
+            { id: 9, title: 'The Undergraduate Guide to R', author: 'Trevor Martin', image: 'books/advance R.jpg', link: 'books/The Undergraduate Guide to R, Trevor Martin.pdf', category: 'R' }
+        ];
+    
+        // Function to filter and render PDFs based on search input
+        function filterPdfs() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const allPdfs = [...featuredPdfs, ...newArrivalsPdfs, ...topSellersPdfs];
+            const filteredPdfs = allPdfs.filter(pdf => 
+                pdf.title.toLowerCase().includes(searchTerm) || 
+                pdf.author.toLowerCase().includes(searchTerm)
+            );
+
+            renderSearchResults(filteredPdfs);
+        }
+
+        // Function to render search results
+        function renderSearchResults(pdfs) {
+            const searchResults = document.getElementById('search-results');
+            searchResults.innerHTML = ''; // Clear previous content
+
+            if (pdfs.length === 0) {
+                searchResults.innerHTML = '<div class="no"><p>No results found.😕</p></div>';
+            } else {
+                pdfs.forEach(pdf => {
+                    const pdfElement = document.createElement('div');
+                    pdfElement.className = 'pdf-item';
+                    pdfElement.innerHTML = `
+                        <a href="${pdf.link}" target="_blank">
+                            <img src="${pdf.image}" alt="${pdf.title}">
+                            <h3>${pdf.title}</h3>
+                            <p>${pdf.author}</p>
+                        </a>
+                        <button class="favorite-btn" onclick="toggleFavorite(${pdf.id}, '${pdf.title}', '${pdf.author}', '${pdf.image}', '${pdf.link}')">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                        <a href="${pdf.link}" download class="down-btn"><i class="fa-solid fa-download"></i></a>
+                    `;
+                    searchResults.appendChild(pdfElement);
+                });
+            }
+        }
+
+        // Event listener for search input
+        document.getElementById('search-input').addEventListener('input', filterPdfs);
+
+        // Add click event listener to the document
+        document.addEventListener('click', function(event) {
+            const searchBox = document.getElementById('search-box');
+            const searchResults = document.getElementById('search-results');
+
+            // Check if the click is outside the search box and results
+            if (!searchBox.contains(event.target) && !searchResults.contains(event.target)) {
+                searchResults.innerHTML = ''; // Clear only search results
+            }
+        });
+
+        // Function to initialize PDF sections
+        function initializeSections() {
+            renderPdfSection(featuredPdfs, 'featured-list');
+            renderPdfSection(newArrivalsPdfs, 'new-arrivals-list');
+            renderPdfSection(topSellersPdfs, 'top-sellers-list');
+        }
+        function toggleFavorite(id, title, author, image, link) {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+    // Check if the book is already in favorites
+    const isFavorite = favorites.some(fav => fav.id === id);
+    
+    if (isFavorite) {
+        // Remove from favorites
+        const updatedFavorites = favorites.filter(fav => fav.id !== id);
+        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+        alert(`${title} has been removed from favorites.`);
+    } else {
+        // Add to favorites
+        favorites.push({ id, title, author, image, link });
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        alert(`${title} has been added to favorites.`);
+    }
+}
+        // Function to render PDF sections
+        function renderPdfSection(pdfs, sectionId) {
+            const section = document.getElementById(sectionId);
+            section.innerHTML = ''; // Clear existing content
+            pdfs.forEach(pdf => {
+                const pdfElement = document.createElement('div');
+                pdfElement.className = 'pdf-item';
+                pdfElement.innerHTML = `
+                    <a href="${pdf.link}" target="_blank">
+                        <img src="${pdf.image}" alt="${pdf.title}">
+                        <h3>${pdf.title}</h3>
+                        <p>${pdf.author}</p>
+                    </a>
+                    <button class="favorite-btn" onclick="toggleFavorite(${pdf.id}, '${pdf.title}', '${pdf.author}', '${pdf.image}', '${pdf.link}')">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                    <a href="${pdf.link}" download class="down-btn"><i class="fa-solid fa-download"></i></a>
+                `;
+                section.appendChild(pdfElement);
+            });
+        }
+        document.querySelectorAll('.dropdown-toggle').forEach(item => {
+                item.addEventListener('click', event => {
+                    const dropdownContent = item.nextElementSibling;
+                    dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+
+            window.onclick = event => {
+                if (!event.target.matches('.dropdown-toggle')) {
+                    document.querySelectorAll('.dropdown-content').forEach(content => {
+                        content.style.display = 'none';
+                    });
+                }
+            };
+        // Call the function to initialize sections on page load
+        initializeSections();
+      // Check for saved theme in localStorage and apply it
+window.onload = function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        document.body.classList.toggle("dark-theme", savedTheme === 'dark');
+        const themeToggle = document.querySelector('.theme-toggle i');
+        if (savedTheme === 'dark') {
+            themeToggle.classList.remove('fa-sun');
+            themeToggle.classList.add('fa-moon');
+        }
+    }
+};
+
+// Function to toggle theme
+function toggleTheme() {
+    document.body.classList.toggle("dark-theme");
+    const themeToggle = document.querySelector('.theme-toggle i');
+    if (document.body.classList.contains("dark-theme")) {
+        themeToggle.classList.remove('fa-sun');
+        themeToggle.classList.add('fa-moon');
+        // Save theme to localStorage
+        localStorage.setItem('theme', 'dark');
+    } else {
+        themeToggle.classList.remove('fa-moon');
+        themeToggle.classList.add('fa-sun');
+        // Save theme to localStorage
+        localStorage.setItem('theme', 'light');
+    }
+}
+// Modify this function to close the dropdown after an item is selected
+function handleDropdownSelection(category) {
+    // Close the dropdown
+    const dropdownContent = document.getElementById('books-menu');
+    dropdownContent.style.display = 'none';
+
+    // Filter PDFs based on the selected category
+    filterPdfs(category);
+}
+
+// Add click event listener to dropdown items
+document.querySelectorAll('.dropdown-content a').forEach(item => {
+    item.addEventListener('click', function() {
+        handleDropdownSelection(this.innerText);
+    });
+});
+
+    </script>
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Tiny Table. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

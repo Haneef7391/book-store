@@ -1,0 +1,420 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    transition: background-color 0.3s, color 0.3s;
+    background-color: #9eacf264; /* Default background */
+}
+
+/* Light Theme */
+body.light-theme {
+    background-color: #f0f0f0;
+    color: black;
+}
+
+header.light-theme {
+    background-color: rgb(255, 234, 234);
+    color: #05318a;
+}
+
+/* Dark Theme */
+body.dark-theme {
+    background-color: #333;
+    color: white;
+}
+
+header.dark-theme {
+    background-color: #222;
+    color: #ddd;
+}
+
+/* Header Styling */
+header {
+    background-color: #e3b7c6ab;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    padding: 10px;
+}
+
+.logo img {
+    width: 150px;
+    height: auto;
+}
+
+/* Loading Container */
+.loading-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-gif {
+    width: 100px;
+    height: 100px;
+}
+
+/* Navbar Styling */
+nav {
+    display: flex;
+}
+
+ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+ul li {
+    margin: 0 1rem;
+    font-weight: 200;
+    font-size: 16px;
+    position: relative;
+}
+
+ul li a {
+    text-decoration: none;
+    padding: 10px;
+    color: #00087a;
+    transition: color 0.3s;
+}
+
+ul li a:hover {
+    color: #ff4e50;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 0;
+    background: transparent;
+}
+
+/* Dropdown Styles */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1;
+}
+
+.dropdown-profile {
+    display: none;
+    position: absolute;
+    margin-left: -40px;
+    border-radius: 10px;
+    width: 160px;
+    margin-top: 10px;
+    background: #fff;
+}
+
+.dropdown-content a,
+.dropdown-profile a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover,
+.dropdown-profile a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show dropdown when .show is added */
+.show {
+    display: block;
+}
+
+/* Search Input */
+.ser {
+    display: flex;
+    align-items: center;
+}
+
+.ser input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 300px;
+    transition: border-color 0.3s;
+}
+
+.ser input:focus {
+    border-color: #2a018a;
+    outline: none;
+}
+
+.ser i {
+    color: #05318a;
+    margin-left: 8px;
+}
+
+/* Book Section */
+.book-section {
+    margin-bottom: 30px;
+}
+
+.book-section h2 {
+    font-size: 24px;
+    margin: 10px 0 15px 200px;
+    text-align: left;
+}
+
+.book-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.book-item {
+    flex: 1 1 20%;
+    padding: 15px;
+    background-color: #f4f4f4;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+/* PDF Item Styles */
+.pdf-category h2 {
+    margin-left: 50px;
+    margin-top: 20px;
+}
+
+.pdf-item,
+.pdf-items {
+    margin: 20px;
+    margin-top: 10px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease-in-out;
+    text-align: center;
+    min-width: 150px;
+    max-width: 200px;
+    display: inline-block;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.523);
+    overflow: hidden;
+}
+
+.pdf-item h3 {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pdf-item:hover {
+    box-shadow: 0 4px 15px rgb(0, 0, 0);
+}
+
+.pdf-item img {
+    width: 100%;
+    height: 150px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    transition: box-shadow 0.3s ease-in-out;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.645));
+}
+
+.pdf-item img:hover {
+    filter: drop-shadow(-10px 10px 9px rgb(78, 78, 78));
+}
+
+.pdf-item p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Horizontal Scrolling */
+.home-books {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px 0;
+}
+
+/* Hide scrollbar for WebKit browsers */
+.home-books::-webkit-scrollbar {
+    display: none;
+}
+
+/* For Firefox */
+.home-books {
+    scrollbar-width: none;
+}
+
+/* For Internet Explorer and Edge */
+.home-books {
+    -ms-overflow-style: none;
+}
+
+/* PDF List Container */
+.pdf-list-container {
+    display: inline-block;
+}
+
+/* Extra Specificity for Links */
+a {
+    text-decoration: none !important;
+}
+
+/* Favorite Button Styles */
+.favorite-btn {
+    background-color: rgb(220, 218, 218);
+    border: none;
+    cursor: pointer;
+    width: 60px;
+    height: 40px;
+    border-radius: 10px;
+    margin-left: -10px;
+    margin-right: 50px;
+    font-size: 24px;
+    color: #030899;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.favorite-btn:hover {
+    color: #e91e63;
+}
+
+/* Download Button Styles */
+.down-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #99999976;
+    color: rgb(26, 9, 153);
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-size: 17px;
+}
+
+.down-btn i {
+    margin-right: 5px;
+}
+
+.down-btn:hover {
+    color: #e91e63;
+}
+
+footer {
+    text-align: center;
+    padding-left: 40px;
+}
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        height: auto;
+        background: #f7bcbc7d;
+    }
+
+    header.dark-theme {
+        background: black;
+    }
+
+    header.light-theme {
+        background-color: rgb(255, 234, 234);
+        color: #05318a;
+    }
+
+    /* Navigation */
+    nav {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    ul {
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        gap: 9px;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul li {
+        display: inline;
+        margin: 0;
+        font-weight: 200;
+        font-size: 12px;
+        position: relative;
+    }
+
+    ul li a {
+        text-decoration: none;
+        display: block;
+        padding: 6px;
+        color: #00087a;
+        transition: color 0.3s;
+    }
+
+    ul li a:hover {
+        color: #ff4e50;
+    }
+
+    .dropdown-toggle {
+        display: none;
+    }
+
+    .book-item {
+        flex: 1 1 45%; /* Adjust to fit more items on smaller screens */
+    }
+
+    .pdf-item {
+        width: 90%; /* Use more width on mobile */
+    }
+
+    .favorite-btn {
+        width: 40px;
+        height: 30px;
+        font-size: 20px;
+    }
+
+    .download-btn {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .ser input {
+        width: 90%; /* Make search input full width */
+    }
+
+    .pdf-item {
+        width: 45%; /* Wider items */
+    }
+}
